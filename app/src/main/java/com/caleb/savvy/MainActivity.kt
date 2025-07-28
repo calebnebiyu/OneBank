@@ -45,13 +45,13 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     SavvyTheme {
         Greeting("Android")
     }
-}
+}*/
 
 @Composable
 fun WelcomeScreen(modifier: Modifier = Modifier) {
@@ -85,5 +85,13 @@ fun WelcomeScreen(modifier: Modifier = Modifier) {
         ) {
             Text("Sign Up")
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WelcomeScreenPreview() {
+    SavvyTheme {
+        WelcomeScreen()
     }
 }
