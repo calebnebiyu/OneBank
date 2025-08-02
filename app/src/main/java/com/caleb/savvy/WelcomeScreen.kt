@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.caleb.savvy.ui.theme.ButtonColor
 import com.caleb.savvy.ui.theme.SavvyTheme
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontStyle
+import android.content.res.Configuration
 
 @Composable
 fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
@@ -35,26 +35,31 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
                 text = "Savvy",
                 style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
             )
             Spacer(Modifier.height(20.dp))
             Text(
                 text = "Guide your Goals. Grow Your Wealth.",
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
-                fontStyle = FontStyle.Italic
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.primary
+
             )
-            Spacer(Modifier.height(60.dp))
+            Spacer(Modifier.height(65.dp))
             Text(
                 text = "Your money. Your goals. Your way.\n" +
                         "Savvy connects your accounts, tracks spending vs. income, and delivers smart AI-driven insights to help you spend better, save faster, and stay on track.\n\n" +
                         "Start your Savings Journey! Choose a funding account, set your goal, and let Savvy guide your progress based on real income activity.\n\n" +
                         "Manage transfers, monitor trends, and build your financial future one move at a time.",
                 style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onPrimary
+
             )
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(65.dp))
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -65,10 +70,13 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
                         .fillMaxWidth()
                         .height(48.dp),
                     shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonColor),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor   = MaterialTheme.colorScheme.onPrimary
+                    )
                 ) {
                     Text("Sign Up",
-                        color = MaterialTheme.colorScheme.onPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold)
                 }
                 Button(
@@ -77,19 +85,32 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
                         .fillMaxWidth()
                         .height(48.dp),
                     shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonColor)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor   = MaterialTheme.colorScheme.onPrimary
+                    )
                 ) {
-                    Text("Login", color = MaterialTheme.colorScheme.onPrimary)
+                    Text("Login", color = MaterialTheme.colorScheme.onBackground)
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name   = "Light Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true
+)
+
+@Preview(
+    name   = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
-    fun WelcomeScreenPreview() {
-        SavvyTheme {
-            WelcomeScreen()
-        }
+fun WelcomeScreenPreview() {
+    SavvyTheme {
+        WelcomeScreen()
     }
+}

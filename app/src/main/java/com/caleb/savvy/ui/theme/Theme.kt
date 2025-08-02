@@ -11,19 +11,21 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.caleb.savvy.ui.theme.AppTypography
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary      = ButtonColor,
-    onPrimary    = LightText,
-    background   = WelcomeBackground,
-    onBackground = LightText
-)
 
 private val LightColorScheme = lightColorScheme(
-    primary      = ButtonColor,
-    onPrimary    = DarkText,
-    background   = WelcomeBackground,
+    primary = ButtonColor,
+    onPrimary = Color.Black,
+    background = LightBackground,
     onBackground = DarkText
+)
+
+private val DarkColorScheme = darkColorScheme(
+    primary = ButtonColor,
+    onPrimary = Color.White,
+    background = DarkBackground,
+    onBackground = LightText
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
