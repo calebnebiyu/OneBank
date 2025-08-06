@@ -110,6 +110,6 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
 @Composable
 fun WelcomeScreenPreview() {
     SavvyTheme {
-        WelcomeScreen()
+        WelcomeScreen(onSignUp = {}, onLogin = {})
     }
 }
