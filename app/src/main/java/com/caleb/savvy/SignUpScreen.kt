@@ -32,6 +32,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.material3.TextFieldDefaults // Added import
+import androidx.compose.ui.graphics.Color          // Added import
 
 
 @Composable
@@ -64,7 +66,8 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Create your Account",
+                text = "Create your Account. \n Enter your details below.",
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 fontStyle = FontStyle.Italic,
                 color = MaterialTheme.colorScheme.primary
@@ -72,16 +75,22 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
             Spacer(modifier = Modifier.height(32.dp))
             TextField(
                 value = firstName,
-                onValueChange = { firstName = it },
+                onValueChange = {firstName = it},
                 label = { Text("First Name") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp),
+                    .padding(vertical = 7.dp),
                 shape = RoundedCornerShape(24.dp),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
+                ),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -97,6 +106,12 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
+                ),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -112,7 +127,13 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp)
+                    .padding(vertical = 6.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
             TextField(
@@ -128,7 +149,13 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp)
+                    .padding(vertical = 6.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent
+                )
             )
             Spacer(modifier = Modifier.height(32.dp))
             Button(
@@ -147,7 +174,13 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            /*Spacer(modifier = Modifier.height(15.dp))
+            Text(
+                text = "OR",
+                style = MaterialTheme.typography.bodyMedium,
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.primary
+            )*/
         }
     }
 }
