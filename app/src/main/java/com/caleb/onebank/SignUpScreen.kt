@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
-import com.caleb.onebank.ui.theme.SavvyTheme
+import com.caleb.onebank.ui.theme.OneBankTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
@@ -199,7 +199,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
 )
 @Composable
 fun SignupScreenPreview() {
-    SavvyTheme { // Ensure your theme is applied
+    OneBankTheme { // Ensure your theme is applied
         SignupScreen(onSignUp = {}, onNavigateToLogin = {})
     }
 }

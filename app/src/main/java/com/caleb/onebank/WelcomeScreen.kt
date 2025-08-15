@@ -1,4 +1,4 @@
-package com.caleb.onebank.ui.screens
+package com.caleb.onebank // Changed from com.caleb.onebank.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.caleb.onebank.ui.theme.SavvyTheme
+import com.caleb.onebank.ui.theme.OneBankTheme
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontStyle
 import android.content.res.Configuration
@@ -21,7 +21,8 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 24.dp, vertical = 32.dp),
+            .padding(horizontal = 24.dp, vertical = 32.dp)
+            .then(modifier), // Applied modifier here
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -54,7 +55,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
                         "Manage transfers, monitor trends, and build your financial future one move at a time.",
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary // This color might need to be onBackground depending on your theme.
 
             )
 
@@ -108,7 +109,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
 )
 @Composable
 fun WelcomeScreenPreview() {
-    SavvyTheme { // Changed from SavvyTheme
+    OneBankTheme { // Changed from SavvyTheme
         WelcomeScreen(onSignUp = {}, onLogin = {})
     }
 }

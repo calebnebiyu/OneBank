@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.caleb.onebank.ui.screens.WelcomeScreen
+import com.caleb.onebank.WelcomeScreen // Changed
 import com.caleb.onebank.SignupScreen
 import com.caleb.onebank.LoginScreen
-import com.caleb.onebank.ui.theme.SavvyTheme
+import com.caleb.onebank.ui.theme.OneBankTheme // Changed
 
 object AppRoutes {
     const val WELCOME = "welcome"
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            SavvyTheme {
+            OneBankTheme { // Changed
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavHost(

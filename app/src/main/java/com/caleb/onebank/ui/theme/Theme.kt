@@ -33,7 +33,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun SavvyTheme(
+fun OneBankTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content:    @Composable () -> Unit
 ) {

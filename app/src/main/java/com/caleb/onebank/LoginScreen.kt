@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
-import com.caleb.onebank.ui.theme.SavvyTheme // Kept as SavvyTheme
+import com.caleb.onebank.ui.theme.OneBankTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
@@ -113,7 +113,7 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             Button(
-                onClick = { /* TODO: Implement actual login logic then call onLoginClicked */ }, // This is the primary login button
+                onClick = { /* TODO: Implement actual login logic then call onLoginClicked */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
@@ -130,12 +130,12 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
             }
             Spacer(modifier = Modifier.height(85.dp))
             Text(
-                text = "Already have an account?", // Changed text
+                text = "Don't have an account?", // Corrected text
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary
             )
             Button(
-                onClick = onLoginClicked, // Changed onClick action
+                onClick = onNavigateToSignUp, // Corrected onClick action
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
@@ -145,7 +145,7 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
                     contentColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text("Login", // Changed button text
+                Text("Sign Up",
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -165,7 +165,7 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
 )
 @Composable
 fun LoginScreenPreview() {
-    SavvyTheme { // Kept as SavvyTheme
+    OneBankTheme {
         LoginScreen(onLoginClicked = {}, onNavigateToSignUp = {})
     }
 }

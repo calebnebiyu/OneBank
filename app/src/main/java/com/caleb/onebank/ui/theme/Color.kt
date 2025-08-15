@@ -6,6 +6,10 @@ val LightBackground = Color(0xFFFFFFFF)
 
 val ButtonColor = Color(0xFF277E28)
 
+val LightButtonColor = Color(0xFF4BBE4D)
+
+val TransparentButtonColor = Color(0xFF808183)
+
 val DarkText = Color(0xFF000000)
 
 val DarkBackground = Color(0xFF121212)
