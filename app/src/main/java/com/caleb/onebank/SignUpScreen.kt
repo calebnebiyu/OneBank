@@ -1,4 +1,4 @@
-package com.caleb.savvy
+package com.caleb.onebank
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.Text
-import com.caleb.savvy.ui.theme.SavvyTheme
+import com.caleb.onebank.ui.theme.SavvyTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
@@ -31,99 +31,56 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.material3.TextFieldDefaults // Added import
-import androidx.compose.ui.graphics.Color          // Added import
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.ui.graphics.Color
+// import androidx.compose.ui.text.font.FontStyle // Commented out as FontStyle.Italic is removed
 
 
 @Composable
 fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
 
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background) // Use background color from theme
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 24.dp), // Consistent padding
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
-                text = "Savvy",
-                style = MaterialTheme.typography.headlineLarge,
+                text = "OneBank",
+                style = MaterialTheme.typography.headlineLarge, // Larger title
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary // Use primary color from theme
             )
-
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(65.dp)) // Increased spacing
             Text(
-                text = "Create your Account. \n Enter your details below.",
+                text = "Let's get started. \n Create your account.",
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyMedium,
-                fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colorScheme.primary
+                style = MaterialTheme.typography.bodyMedium, // Consistent typography
+                color = MaterialTheme.colorScheme.primary // Use primary color
             )
-            Spacer(modifier = Modifier.height(32.dp))
-            TextField(
-                value = firstName,
-                onValueChange = {firstName = it},
-                label = { Text("First Name") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 7.dp),
-                shape = RoundedCornerShape(24.dp),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next,
-                    keyboardType = KeyboardType.Text
-                ),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent
-                )
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = lastName,
-                onValueChange = { lastName = it },
-                label = { Text("Last Name") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp),
-                shape = RoundedCornerShape(24.dp),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next,
-                    keyboardType = KeyboardType.Text
-                ),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent
-                )
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp)) // Increased spacing
+
+            // Email TextField
             TextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
                 singleLine = true,
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(24.dp), // Rounded corners
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
+                    imeAction = ImeAction.Next // Next action for email
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,6 +93,8 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 )
             )
             Spacer(modifier = Modifier.height(16.dp))
+
+            // Password TextField
             TextField(
                 value = password,
                 onValueChange = { password = it },
@@ -145,69 +104,102 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Next
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp),
-                colors = TextFieldDefaults.colors(
+                    .padding(vertical = 6.dp), // Consistent padding
+                colors = TextFieldDefaults.colors( // Remove underline
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent,
                     errorIndicatorColor = Color.Transparent
                 )
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp)) // Consistent spacing
+
+            // Confirm Password TextField
+            TextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                label = { Text("Confirm Password") },
+                singleLine = true,
+                shape = RoundedCornerShape(24.dp), // Rounded corners
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done // Done action for confirm password
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp), // Consistent padding
+                colors = TextFieldDefaults.colors( // Remove underline
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent
+                )
+            )
+            Spacer(modifier = Modifier.height(20.dp)) // Increased spacing before button
             Button(
-                onClick = onSignUp,
+                onClick = { /* TODO: Implement signup logic then call onSignUp */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp), // Standard button height
+                shape = RoundedCornerShape(24.dp), // Rounded corners for button
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary, // Button color from theme
+                    contentColor = MaterialTheme.colorScheme.onPrimary // Text color on button from theme
+                )
+            ) {
+                Text(
+                    "Sign Up",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Spacer(modifier = Modifier.height(65.dp)) // Spacing before "OR" or alternative action
+
+            Text(
+                text = "Already have an account?", // Changed text
+                style = MaterialTheme.typography.bodyMedium,
+                // fontStyle = FontStyle.Italic, // Removed
+                color = MaterialTheme.colorScheme.primary
+            )
+            // Spacer(modifier = Modifier.height(15.dp)) // This Spacer is REMOVED
+            Button(
+                onClick = onNavigateToLogin, // Changed onClick
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
                 shape = RoundedCornerShape(24.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor   = MaterialTheme.colorScheme.onPrimary
+                colors = ButtonDefaults.buttonColors( // Changed colors for secondary style
+                    containerColor = Color.Transparent,
+                    contentColor   = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text("Confirm",
-                    color = MaterialTheme.colorScheme.onPrimary,
+                Text("Login",
+                    // color = MaterialTheme.colorScheme.onBackground, // Removed color to use Button's contentColor
                     fontWeight = FontWeight.Bold
                 )
             }
-            /*Spacer(modifier = Modifier.height(15.dp))
-            Text(
-                text = "OR",
-                style = MaterialTheme.typography.bodyMedium,
-                fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colorScheme.primary
-            )*/
         }
     }
 }
 
 @Preview(
     name = "Signup Screen - Light",
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    uiMode = Configuration.UI_MODE_NIGHT_NO, // Light mode
     showBackground = true
 )
 @Preview(
     name = "Signup Screen - Dark",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    uiMode = Configuration.UI_MODE_NIGHT_YES, // Dark mode
     showBackground = true
 )
 @Composable
 fun SignupScreenPreview() {
-    SavvyTheme {
+    SavvyTheme { // Ensure your theme is applied
         SignupScreen(onSignUp = {}, onNavigateToLogin = {})
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MinimalPreview() {
-    SavvyTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            Text("Hello Preview!", color = MaterialTheme.colorScheme.onBackground)
-        }
     }
 }

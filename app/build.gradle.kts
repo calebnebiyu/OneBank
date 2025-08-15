@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.caleb.savvy"
+    namespace = "com.caleb.onebank"
     compileSdk = 36
 
     defaultConfig {

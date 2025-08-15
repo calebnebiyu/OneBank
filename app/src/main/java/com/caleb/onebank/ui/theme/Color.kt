@@ -1,4 +1,4 @@
-package com.caleb.savvy.ui.theme
+package com.caleb.onebank.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

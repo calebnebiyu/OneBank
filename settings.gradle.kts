@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Savvy"
+rootProject.name = "OneBank"
 include(":app")

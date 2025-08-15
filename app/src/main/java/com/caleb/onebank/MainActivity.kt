@@ -1,4 +1,4 @@
-package com.caleb.savvy
+package com.caleb.onebank
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.caleb.savvy.SignupScreen // Adjusted import
-import com.caleb.savvy.ui.screens.WelcomeScreen
-import com.caleb.savvy.ui.theme.SavvyTheme
+import com.caleb.onebank.ui.screens.WelcomeScreen
+import com.caleb.onebank.SignupScreen
+import com.caleb.onebank.LoginScreen
+import com.caleb.onebank.ui.theme.SavvyTheme
 
 object AppRoutes {
     const val WELCOME = "welcome"
@@ -52,17 +53,20 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToLogin = { navController.navigate(AppRoutes.LOGIN) }
                             )
                         }
-                        // composable(AppRoutes.LOGIN) {
-                            // TODO: Replace with your actual LoginScreen composable
-                            // For now, it will be an empty destination.
-                            // Example: LoginScreen(
-                            //    onNavigateToSignUp = { navController.navigate(AppRoutes.SIGNUP) },
-                            //    onLoginSuccess = { /* ... */ }
-                            // )
+                        composable(AppRoutes.LOGIN) {
+                            LoginScreen(
+                                onLoginClicked = {
+                                    // TODO: Implement actual login logic
+                                    // For now, you might want to navigate somewhere else or pop back
+                                    // Example: navController.popBackStack() // To go back to WelcomeScreen
+                                    // Example: navController.navigate("home_screen") { popUpTo(AppRoutes.WELCOME) }
+                                },
+                                onNavigateToSignUp = { navController.navigate(AppRoutes.SIGNUP) }
+                            )
                         }
                     }
                 }
             }
         }
     }
-//}
+}

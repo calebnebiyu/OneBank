@@ -1,4 +1,4 @@
-package com.caleb.savvy.ui.screens
+package com.caleb.onebank.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.caleb.savvy.ui.theme.SavvyTheme
+import com.caleb.onebank.ui.theme.SavvyTheme
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontStyle
 import android.content.res.Configuration
@@ -32,7 +32,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
         ) {
             Spacer(Modifier.height(20.dp))
             Text(
-                text = "Savvy",
+                text = "OneBank",
                 style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
@@ -47,11 +47,10 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
                 color = MaterialTheme.colorScheme.primary
 
             )
-            Spacer(Modifier.height(65.dp))
+            Spacer(Modifier.height(35.dp))
             Text(
-                text = "Your money. Your goals. Your way.\n" +
-                        "Savvy connects your accounts, tracks spending vs. income, and delivers smart AI-driven insights to help you spend better, save faster, and stay on track.\n\n" +
-                        "Start your Savings Journey! Choose a funding account, set your goal, and let Savvy guide your progress based on real income activity.\n\n" +
+                text =  "OneBank connects your accounts, tracks spending vs. income, and delivers smart AI-driven insights to help you spend better, save faster, and stay on track.\n\n" +
+                        "Start your Savings Journey! Choose a funding account, set your goal, and let OneBank guide your progress based on real income activity.\n\n" +
                         "Manage transfers, monitor trends, and build your financial future one move at a time.",
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
@@ -59,7 +58,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
 
             )
 
-            Spacer(modifier = Modifier.height(65.dp))
+            Spacer(modifier = Modifier.height(35.dp))
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -109,7 +108,7 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
 )
 @Composable
 fun WelcomeScreenPreview() {
-    SavvyTheme {
+    SavvyTheme { // Changed from SavvyTheme
         WelcomeScreen(onSignUp = {}, onLogin = {})
     }
 }

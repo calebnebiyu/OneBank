@@ -1,4 +1,4 @@
-package com.caleb.savvy
+package com.caleb.onebank
 
 import org.junit.Test
 
