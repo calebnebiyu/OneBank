@@ -72,7 +72,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             StandardTextField(
                 value = firstname,
@@ -155,7 +155,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(20.dp)) // Reduced from 42dp to account for less padding in TextField
+            Spacer(modifier = Modifier.height(32.dp)) // Reduced from 42dp to account for less padding in TextField
             Button(
                 onClick = {
                     firstnameError = false

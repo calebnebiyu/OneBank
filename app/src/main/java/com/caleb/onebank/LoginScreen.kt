@@ -68,7 +68,7 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(42.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             // Email StandardTextField
             StandardTextField(
@@ -83,7 +83,7 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(12.dp)) // Consistent spacing
+            Spacer(modifier = Modifier.height(32.dp)) // Consistent spacing
 
             // Password StandardTextField
             StandardTextField(
@@ -98,7 +98,7 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(42.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = onLogin,
                 modifier = Modifier

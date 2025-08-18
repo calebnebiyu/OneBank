@@ -38,13 +38,13 @@ fun SignUpSettingsScreen(onNavigateNext: () -> Unit) { // Added a placeholder na
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Space between title and subtitle
+            Spacer(modifier = Modifier.height(45.dp)) // Space between title and subtitle
 
             Text(
-                text = "A few more details, and you're good to go!",
-                style = MaterialTheme.typography.bodyLarge, // Or bodyMedium, adjust as you like
+                text = "A few more details,... \n and you're good to go!",
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onBackground // Or primary, adjust as you like
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.weight(1f)) // Pushes content below to the bottom if any

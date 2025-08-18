@@ -2,8 +2,9 @@ package com.caleb.onebank.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.defaultMinSize // Added for clarity, though often covered by other layout imports
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+// import androidx.compose.foundation.layout.height // This will be replaced by defaultMinSize logic
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,8 +21,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-// Default values - you can change these here to update all StandardTextFields app-wide
-val DefaultTextFieldHeight: Dp = 48.dp
+// Default values
+val DefaultTextFieldHeight: Dp = 56.dp // This will be the minHeight
 val DefaultTextFieldShape: Shape = RoundedCornerShape(24.dp)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,8 +46,8 @@ fun StandardTextField(
     singleLine: Boolean = true,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
-    height: Dp = DefaultTextFieldHeight, // Use the default height
-    shape: Shape = DefaultTextFieldShape, // Use the default shape
+    height: Dp = DefaultTextFieldHeight, // This parameter now feeds defaultMinSize
+    shape: Shape = DefaultTextFieldShape,
     colors: TextFieldColors = TextFieldDefaults.colors(
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
@@ -64,7 +65,7 @@ fun StandardTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
-            .height(height) // Apply the height
+            .defaultMinSize(minHeight = height) // Changed from .height(height)
             .border(
                 BorderStroke(
                     width = 1.dp,
