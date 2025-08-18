@@ -10,12 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_onebank_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Savvy">
+        android:theme="@style/Theme.OneBank">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Savvy">
+            android:theme="@style/Theme.OneBank">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

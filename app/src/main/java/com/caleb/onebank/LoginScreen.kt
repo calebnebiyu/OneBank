@@ -4,40 +4,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import androidx.compose.material3.Text
-import com.caleb.onebank.ui.theme.OneBankTheme
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.*
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.caleb.onebank.ui.theme.OneBankTheme
+import com.caleb.onebank.ui.components.StandardTextField // Ensure this import is present
 
 @Composable
-fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
+fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    // Add error states if/when you implement login validation
+    // var emailError by remember { mutableStateOf(false) }
+    // var passwordError by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier
@@ -51,7 +54,6 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = "OneBank",
                 style = MaterialTheme.typography.headlineLarge,
@@ -59,95 +61,80 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
-
-            Spacer(modifier = Modifier.height(65.dp))
+            Spacer(modifier = Modifier.height(45.dp))
             Text(
-                text = "Welcome back! \n Sign in to your account.",
+                text = "Welcome back! \n Please login to your account.",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(42.dp))
 
-            TextField(
+            // Email StandardTextField
+            StandardTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
-                singleLine = true,
-                shape = RoundedCornerShape(24.dp),
+                isError = false, // Set to emailError if implementing validation
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent
-                )
+                modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
+
+            Spacer(modifier = Modifier.height(12.dp)) // Consistent spacing
+
+            // Password StandardTextField
+            StandardTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                singleLine = true,
-                shape = RoundedCornerShape(24.dp),
+                isError = false, // Set to passwordError if implementing validation
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent
-                )
+                modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(42.dp))
             Button(
-                onClick = { /* TODO: Implement actual login logic then call onLoginClicked */ },
+                onClick = onLogin,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp),
+                    .height(48.dp), // Standard button height
+                shape = RoundedCornerShape(24.dp), // Standard button shape
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor   = MaterialTheme.colorScheme.onPrimary
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
-                Text("Login",
+                Text(
+                    "Login",
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.height(85.dp))
+            Spacer(modifier = Modifier.height(25.dp))
             Text(
-                text = "Don't have an account?", // Corrected text
-                style = MaterialTheme.typography.bodySmall,
+                text = "Don't have an account?",
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
             Button(
-                onClick = onNavigateToSignUp, // Corrected onClick action
+                onClick = onNavigateToSignup,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp),
-                 colors = ButtonDefaults.buttonColors(
+                    .height(48.dp), // Standard button height
+                shape = RoundedCornerShape(24.dp), // Standard button shape
+                colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
                     contentColor = MaterialTheme.colorScheme.primary
                 )
             ) {
                 Text("Sign Up",
-                    fontWeight = FontWeight.Bold
-                )
+                    fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -166,6 +153,6 @@ fun LoginScreen(onLoginClicked: () -> Unit, onNavigateToSignUp: () -> Unit) {
 @Composable
 fun LoginScreenPreview() {
     OneBankTheme {
-        LoginScreen(onLoginClicked = {}, onNavigateToSignUp = {})
+        LoginScreen(onLogin = {}, onNavigateToSignup = {})
     }
 }
