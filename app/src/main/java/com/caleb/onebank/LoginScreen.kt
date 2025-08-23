@@ -38,9 +38,9 @@ import com.caleb.onebank.ui.components.StandardTextField // Ensure this import i
 fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    // Add error states if/when you implement login validation
-    // var emailError by remember { mutableStateOf(false) }
-    // var passwordError by remember { mutableStateOf(false) }
+
+    var emailError by remember { mutableStateOf(false) }
+    var passwordError by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier
@@ -63,7 +63,7 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(45.dp))
             Text(
-                text = "Welcome back! \n Please login to your account.",
+                text = "Welcome back! \n Login to your account.",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
@@ -73,7 +73,8 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
             // Email StandardTextField
             StandardTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = {email = it
+                    if (emailError) emailError = false},
                 label = { Text("Email") },
                 isError = false, // Set to emailError if implementing validation
                 keyboardOptions = KeyboardOptions.Default.copy(
@@ -84,11 +85,11 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
             )
 
             Spacer(modifier = Modifier.height(32.dp)) // Consistent spacing
-
             // Password StandardTextField
             StandardTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = {password = it
+                    if (passwordError) passwordError = false},
                 label = { Text("Password") },
                 isError = false, // Set to passwordError if implementing validation
                 visualTransformation = PasswordVisualTransformation(),

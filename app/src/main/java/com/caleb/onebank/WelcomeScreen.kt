@@ -14,6 +14,7 @@ import com.caleb.onebank.ui.theme.OneBankTheme
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontStyle
 import android.content.res.Configuration
+import androidx.compose.ui.unit.sp // Added for explicit fontSize
 
 @Composable
 fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
@@ -42,24 +43,24 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
             Spacer(Modifier.height(20.dp))
             Text(
                 text = "Guide your Goals. Grow Your Wealth.",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall.copy(fontSize = 16.sp),
                 textAlign = TextAlign.Center,
                 fontStyle = FontStyle.Italic,
                 color = MaterialTheme.colorScheme.primary
 
             )
-            Spacer(Modifier.height(35.dp))
+            Spacer(Modifier.height(50.dp))
             Text(
                 text =  "OneBank connects your accounts, tracks spending vs. income, and delivers smart AI-driven insights to help you spend better, save faster, and stay on track.\n\n" +
                         "Start your Savings Journey! Choose a funding account, set your goal, and let OneBank guide your progress based on real income activity.\n\n" +
                         "Manage transfers, monitor trends, and build your financial future one move at a time.",
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodySmall.copy(fontSize = 18.sp), // Added fontSize
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onPrimary // This color might need to be onBackground depending on your theme.
 
             )
 
-            Spacer(modifier = Modifier.height(35.dp))
+            Spacer(modifier = Modifier.height(50.dp))
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)

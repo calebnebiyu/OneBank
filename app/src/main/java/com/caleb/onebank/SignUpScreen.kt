@@ -67,7 +67,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(45.dp))
             Text(
-                text = "Let's get started. \n Create your account.",
+                text = "Let's get started! \n Create your account.",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
@@ -78,7 +78,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 value = firstname,
                 onValueChange = {
                     firstname = it
-                    if (firstnameError) firstnameError = false
+                    //if (firstnameError) firstnameError = false
                 },
                 label = { Text("First Name") },
                 isError = firstnameError,
@@ -94,7 +94,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 value = lastname,
                 onValueChange = {
                     lastname = it
-                    if (lastnameError) lastnameError = false
+                    //if (lastnameError) lastnameError = false
                 },
                 label = { Text("Last Name") },
                 isError = lastnameError,
@@ -110,7 +110,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 value = email,
                 onValueChange = {
                     email = it
-                    if (emailError) emailError = false
+                    //if (emailError) emailError = false
                 },
                 label = { Text("Email") },
                 isError = emailError,
@@ -126,8 +126,8 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 value = password,
                 onValueChange = {
                     password = it
-                    if (passwordError) passwordError = false
-                    if (confirmPasswordError && it == confirmPassword) confirmPasswordError = false
+                    //if (passwordError) passwordError = false
+                    //if (confirmPasswordError && it == confirmPassword) confirmPasswordError = false
                 },
                 label = { Text("Password") },
                 isError = passwordError,
@@ -144,7 +144,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 value = confirmPassword,
                 onValueChange = {
                     confirmPassword = it
-                    if (confirmPasswordError) confirmPasswordError = false
+                    //if (confirmPasswordError) confirmPasswordError = false
                 },
                 label = { Text("Confirm Password") },
                 isError = confirmPasswordError,

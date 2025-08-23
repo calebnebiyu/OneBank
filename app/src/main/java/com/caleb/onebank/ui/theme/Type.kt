@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.sp
 import com.caleb.onebank.R
 
-
 val Montserrat = FontFamily(
     Font(R.font.montserrat_regular,    weight = FontWeight.Normal),
     Font(R.font.montserrat_italic,     weight = FontWeight.Normal, style = FontStyle.Italic),
@@ -23,11 +22,11 @@ val AppTypography = Typography(
     ),
     bodyMedium = TextStyle(
         fontFamily = Montserrat,
-        fontSize   = 18.sp,
+        fontSize   = 20.sp,
         lineHeight = 24.sp
     ),
     bodySmall = TextStyle(
         fontFamily = Montserrat,
-        fontSize    = 20.sp
+        fontSize   = 15.sp
     )
 )

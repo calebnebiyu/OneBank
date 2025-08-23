@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(AppRoutes.SIGNUP_SETTINGS) { // New route added
                             SignUpSettingsScreen(
-                                onNavigateNext = {
+                                onNavigateContinue = {
                                     // TODO: Define actual navigation for the "Next" button
                                     // For now, let's navigate back to Login as an example
                                     navController.navigate(AppRoutes.LOGIN) {
