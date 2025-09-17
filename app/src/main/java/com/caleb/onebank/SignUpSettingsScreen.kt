@@ -30,50 +30,22 @@ import androidx.compose.ui.unit.dp
 import com.caleb.onebank.ui.components.StandardTextField
 import com.caleb.onebank.ui.theme.OneBankTheme
 import java.util.Locale // Needed for country list
-import java.util.Currency // Added for currency information
-import java.util.TimeZone // Added for timezone information
-
-// Helper function to generate flag emoji from country code
-fun getFlagEmoji(countryCode: String): String {
-    if (countryCode.length != 2) return "" // Not a valid ISO country code
-    // Check if the country code consists of letters only (more robust)
-    if (!countryCode.all { it.isLetter() }) return "❓"
-
-    val firstLetter = Character.codePointAt(countryCode.uppercase(Locale.ROOT), 0) - 'A'.code + 0x1F1E6
-    val secondLetter = Character.codePointAt(countryCode.uppercase(Locale.ROOT), 1) - 'A'.code + 0x1F1E6
-
-    if (!Character.isValidCodePoint(firstLetter) || !Character.isValidCodePoint(secondLetter)) {
-        return "❓" // Fallback for invalid codes
-    }
-    return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
-}
 
 @OptIn(ExperimentalMaterial3Api::class) // Keep OptIn if StandardTextField uses Experimental APIs
 @Composable
 fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
-    var countryInput by remember { mutableStateOf("") } // Renamed for clarity, was 'country'
+    var country by remember { mutableStateOf("") }
+
     var countryError by remember { mutableStateOf(false) }
 
-    // Store pairs of (displayName, countryCode)
+    // Get all country names
     val allCountries = remember {
-        Locale.getISOCountries().mapNotNull { code ->
-            val locale = Locale("", code)
-            // Filter out locales that don't have a displayable country name or are not 2 letters
-            if (locale.displayCountry.isNotBlank() && code.length == 2 && code.all { it.isLetter() }) {
-                locale.displayCountry to code // Pair of (Display Name, Country Code)
-            } else {
-                null
-            }
-        }.sortedBy { it.first } // Sort by display name
+        Locale.getISOCountries().map { countryCode ->
+            Locale("", countryCode).displayCountry
+        }.sorted()
     }
-
-    var countrySuggestions by remember { mutableStateOf<List<Pair<String, String>>>(emptyList()) }
+    var countrySuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
     var showCountryDropdown by remember { mutableStateOf(false) }
-
-    // State variables for displaying country details
-    var countryFlag by remember { mutableStateOf("") }
-    var countryCurrency by remember { mutableStateOf("") }
-    var countryTimezone by remember { mutableStateOf("") }
 
 
     Surface(
@@ -122,20 +94,17 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
 
             Box(modifier = Modifier.fillMaxWidth()) { // Box for TextField and DropdownMenu
                 StandardTextField(
-                    value = countryInput,
+                    value = country,
                     onValueChange = { newValue ->
-                        countryInput = newValue
+                        country = newValue
                         if (newValue.isBlank()) {
                             countrySuggestions = emptyList()
                             showCountryDropdown = false
-                            // Clear details when input is blank
-                            countryFlag = ""
-                            countryCurrency = ""
-                            countryTimezone = ""
                         } else {
                             countrySuggestions = allCountries.filter {
-                                it.first.startsWith(newValue, ignoreCase = true) // Filter by display name
+                                it.startsWith(newValue, ignoreCase = true)
                             }
+                            // Show dropdown if there are suggestions and text field has text
                             showCountryDropdown = countrySuggestions.isNotEmpty()
                         }
                         if (countryError) countryError = false
@@ -150,11 +119,14 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
                         .fillMaxWidth()
                         .onFocusChanged { focusState ->
                             if (focusState.isFocused) {
-                                if (countryInput.isNotBlank() && countrySuggestions.isNotEmpty()) {
+                                // If field gains focus and has text, show suggestions if any
+                                if (country.isNotBlank() && countrySuggestions.isNotEmpty()) {
                                     showCountryDropdown = true
                                 }
                             } else {
-                                // Dropdown dismiss handled by onDismissRequest or item click
+                                // This is a common place to add a small delay if dropdown closes too quickly
+                                // For now, onDismissRequest will handle clicks outside.
+                                // showCountryDropdown = false 
                             }
                         }
                 )
@@ -164,34 +136,13 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
                     onDismissRequest = { showCountryDropdown = false },
                     modifier = Modifier.fillMaxWidth() // Makes dropdown same width as text field
                 ) {
-                    countrySuggestions.take(5).forEach { (name, code) -> // Destructure Pair
+                    countrySuggestions.take(5).forEach { suggestion -> // Limiting to 5 suggestions
                         DropdownMenuItem(
-                            text = { Text(name) }, // Display name
+                            text = { Text(suggestion) },
                             onClick = {
-                                countryInput = name // Set text field to the selected country name
-                                val selectedCountryCode = code // Use the country code for lookups
+                                country = suggestion
                                 showCountryDropdown = false
                                 countrySuggestions = emptyList() // Clear suggestions
-
-                                try {
-                                    val locale = Locale("", selectedCountryCode)
-                                    countryFlag = getFlagEmoji(selectedCountryCode)
-
-                                    val currencyInstance = Currency.getInstance(locale)
-                                    countryCurrency = "${currencyInstance.currencyCode} (${currencyInstance.symbol})"
-
-                                    val timezones = java.util.TimeZone.getAvailableIDs(selectedCountryCode)
-                                    countryTimezone = if (timezones.isNotEmpty()) timezones[0] else "N/A"
-
-                                } catch (e: IllegalArgumentException) {
-                                    countryFlag = getFlagEmoji(selectedCountryCode)
-                                    countryCurrency = "N/A (Invalid Code)"
-                                    countryTimezone = "N/A"
-                                } catch (e: Exception) {
-                                    countryFlag = "❓"
-                                    countryCurrency = "N/A"
-                                    countryTimezone = "N/A"
-                                }
                             }
                         )
                     }
@@ -199,35 +150,18 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
             }
             // End of Autocomplete Country Section
 
-            // Display country details if available
-            if (countryFlag.isNotBlank()) {
-                Text(
-                    text = "Flag: $countryFlag",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, top = 8.dp) // Added top padding
-                )
-            }
-            if (countryCurrency.isNotBlank()) {
-                Text(
-                    text = "Currency: $countryCurrency",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, top = 4.dp)
-                )
-            }
-            if (countryTimezone.isNotBlank()) {
-                Text(
-                    text = "Timezone: $countryTimezone",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, top = 4.dp)
-                )
-            }
+            // Placeholder for other fields like email, password, etc.
+            // Remember to remove the duplicated "Country of Residence" Text and StandardTextField
+            // that were previously below the first one if they are no longer needed.
 
+            // Example:
+            // Spacer(modifier = Modifier.height(20.dp))
+            // Text(text = "Email", ...)
+            // StandardTextField(value = email, onValueChange = { email = it }, ...)
+            // ... and so on for password and confirmPassword
             Spacer(modifier = Modifier.height(30.dp))
             Button(
-                onClick = { /* DO NOTHING FOR NOW */ }, // Changed from onNavigateContinue
+                onClick = { /* Navigation will be added later */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp), // Standard button height
@@ -239,11 +173,10 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
             ) {
                 Text(
                     "Finish",
-                    color = MaterialTheme.colorScheme.onPrimary, // Changed from onBackground for better contrast
+                    color = MaterialTheme.colorScheme.onPrimary, // Ensured contrast
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.height(20.dp)) // Added Spacer at the end for better scrollability
         }
     }
 }
@@ -264,4 +197,3 @@ fun SignUpSettingsScreenPreview() {
         SignUpSettingsScreen(onNavigateContinue = {})
     }
 }
-

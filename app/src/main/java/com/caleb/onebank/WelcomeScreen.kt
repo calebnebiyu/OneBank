@@ -88,10 +88,13 @@ fun WelcomeScreen(modifier: Modifier = Modifier, onSignUp: () -> Unit = {}, onLo
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor   = MaterialTheme.colorScheme.onPrimary
+                        contentColor   = MaterialTheme.colorScheme.onPrimary,
                     )
                 ) {
-                    Text("Login", color = MaterialTheme.colorScheme.onBackground)
+                    Text("Login",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold,
+                    )
                 }
             }
         }

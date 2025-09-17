@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -84,7 +85,7 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(32.dp)) // Consistent spacing
+            Spacer(modifier = Modifier.height(12.dp)) // Consistent spacing
             // Password StandardTextField
             StandardTextField(
                 value = password,
@@ -123,20 +124,15 @@ fun LoginScreen(onLogin: () -> Unit, onNavigateToSignup: () -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            Button(
-                onClick = onNavigateToSignup,
+            Text(
+                text = "Sign Up",
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodySmall, // Using a slightly larger style for tapping
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp), // Standard button height
-                shape = RoundedCornerShape(24.dp), // Standard button shape
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = MaterialTheme.colorScheme.primary
-                )
-            ) {
-                Text("Sign Up",
-                    fontWeight = FontWeight.Bold)
-            }
+                    .clickable { onNavigateToSignup() }
+                    .padding(vertical = 8.dp) // Adding some vertical padding for a decent tap target
+            )
         }
     }
 }

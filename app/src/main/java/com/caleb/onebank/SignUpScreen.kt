@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp // Added for explicit font size
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
@@ -31,6 +33,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.graphics.Color
 import com.caleb.onebank.ui.components.StandardTextField // Ensure this import is present
+import com.caleb.onebank.ui.theme.Montserrat // Import for direct FontFamily usage
 
 @Composable
 fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
@@ -205,7 +208,7 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
             ) {
                 Text(
                     "Continue",
-                    color = MaterialTheme.colorScheme.onBackground, 
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -215,21 +218,15 @@ fun SignupScreen(onSignUp: () -> Unit, onNavigateToLogin: () -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            Button(
-                onClick = onNavigateToLogin,
+            Text(
+                text = "Login",
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent, 
-                    contentColor   = MaterialTheme.colorScheme.primary
-                )
-            ) {
-                Text("Login",
-                    fontWeight = FontWeight.Bold
-                )
-            }
+                    .clickable { onNavigateToLogin() }
+                    .padding(vertical = 8.dp)
+            )
         }
     }
 }
