@@ -30,15 +30,14 @@ import androidx.compose.ui.unit.dp
 import com.caleb.onebank.ui.components.StandardTextField
 import com.caleb.onebank.ui.theme.OneBankTheme
 import java.util.Locale // Needed for country list
+import java.util.TimeZone // Needed for timezone list
+import java.util.Currency // Needed for currency list
 
 @OptIn(ExperimentalMaterial3Api::class) // Keep OptIn if StandardTextField uses Experimental APIs
 @Composable
 fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
     var country by remember { mutableStateOf("") }
-
     var countryError by remember { mutableStateOf(false) }
-
-    // Get all country names
     val allCountries = remember {
         Locale.getISOCountries().map { countryCode ->
             Locale("", countryCode).displayCountry
@@ -46,6 +45,18 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
     }
     var countrySuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
     var showCountryDropdown by remember { mutableStateOf(false) }
+
+    var timezone by remember { mutableStateOf("") }
+    var timezoneError by remember { mutableStateOf(false) }
+    val allTimezones = remember { TimeZone.getAvailableIDs().sorted() }
+    var timezoneSuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
+    var showTimezoneDropdown by remember { mutableStateOf(false) }
+
+    var currency by remember { mutableStateOf("") }
+    var currencyError by remember { mutableStateOf(false) }
+    val allCurrencies = remember { Currency.getAvailableCurrencies().map { it.currencyCode }.sorted() }
+    var currencySuggestions by remember { mutableStateOf<List<String>>(emptyList()) }
+    var showCurrencyDropdown by remember { mutableStateOf(false) }
 
 
     Surface(
@@ -85,28 +96,25 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
                 text = "Country of Residence",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp), // You may adjust or remove this padding as needed
+                    .padding(start = 16.dp),
                 textAlign = TextAlign.Left,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(5.dp))
-
-            Box(modifier = Modifier.fillMaxWidth()) { // Box for TextField and DropdownMenu
+            Box(modifier = Modifier.fillMaxWidth()) {
                 StandardTextField(
                     value = country,
                     onValueChange = { newValue ->
                         country = newValue
-                        if (newValue.isBlank()) {
-                            countrySuggestions = emptyList()
-                            showCountryDropdown = false
+                        countrySuggestions = if (newValue.isBlank()) {
+                            emptyList()
                         } else {
-                            countrySuggestions = allCountries.filter {
+                            allCountries.filter {
                                 it.startsWith(newValue, ignoreCase = true)
                             }
-                            // Show dropdown if there are suggestions and text field has text
-                            showCountryDropdown = countrySuggestions.isNotEmpty()
                         }
+                        showCountryDropdown = countrySuggestions.isNotEmpty()
                         if (countryError) countryError = false
                     },
                     label = { Text("Country") },
@@ -119,53 +127,162 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
                         .fillMaxWidth()
                         .onFocusChanged { focusState ->
                             if (focusState.isFocused) {
-                                // If field gains focus and has text, show suggestions if any
                                 if (country.isNotBlank() && countrySuggestions.isNotEmpty()) {
                                     showCountryDropdown = true
                                 }
                             } else {
-                                // This is a common place to add a small delay if dropdown closes too quickly
-                                // For now, onDismissRequest will handle clicks outside.
-                                // showCountryDropdown = false 
+                                // showCountryDropdown = false // Consider delaying this
                             }
                         }
-                )
-
+                    )
                 DropdownMenu(
                     expanded = showCountryDropdown && countrySuggestions.isNotEmpty(),
                     onDismissRequest = { showCountryDropdown = false },
-                    modifier = Modifier.fillMaxWidth() // Makes dropdown same width as text field
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    countrySuggestions.take(5).forEach { suggestion -> // Limiting to 5 suggestions
+                    countrySuggestions.take(5).forEach { suggestion ->
                         DropdownMenuItem(
                             text = { Text(suggestion) },
                             onClick = {
                                 country = suggestion
                                 showCountryDropdown = false
-                                countrySuggestions = emptyList() // Clear suggestions
+                                countrySuggestions = emptyList()
                             }
                         )
                     }
                 }
             }
-            // End of Autocomplete Country Section
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // Placeholder for other fields like email, password, etc.
-            // Remember to remove the duplicated "Country of Residence" Text and StandardTextField
-            // that were previously below the first one if they are no longer needed.
-
-            // Example:
-            // Spacer(modifier = Modifier.height(20.dp))
-            // Text(text = "Email", ...)
-            // StandardTextField(value = email, onValueChange = { email = it }, ...)
-            // ... and so on for password and confirmPassword
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(
-                onClick = { /* Navigation will be added later */ },
+            Text(
+                text = "Timezone",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp), // Standard button height
-                shape = RoundedCornerShape(24.dp), // Standard button shape
+                    .padding(start = 16.dp),
+                textAlign = TextAlign.Left,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            Box(modifier = Modifier.fillMaxWidth()) {
+                StandardTextField(
+                    value = timezone,
+                    onValueChange = { newValue ->
+                        timezone = newValue
+                        timezoneSuggestions = if (newValue.isBlank()) {
+                            emptyList()
+                        } else {
+                            allTimezones.filter {
+                                it.contains(newValue, ignoreCase = true) // Contains for broader search
+                            }
+                        }
+                        showTimezoneDropdown = timezoneSuggestions.isNotEmpty()
+                        if (timezoneError) timezoneError = false
+                    },
+                    label = { Text("Timezone") },
+                    isError = timezoneError,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onFocusChanged { focusState ->
+                            if (focusState.isFocused) {
+                                if (timezone.isNotBlank() && timezoneSuggestions.isNotEmpty()) {
+                                    showTimezoneDropdown = true
+                                }
+                            } else {
+                                // showTimezoneDropdown = false // Consider delaying this
+                            }
+                        }
+                    )
+                DropdownMenu(
+                    expanded = showTimezoneDropdown && timezoneSuggestions.isNotEmpty(),
+                    onDismissRequest = { showTimezoneDropdown = false },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    timezoneSuggestions.take(5).forEach { suggestion ->
+                        DropdownMenuItem(
+                            text = { Text(suggestion) },
+                            onClick = {
+                                timezone = suggestion
+                                showTimezoneDropdown = false
+                                timezoneSuggestions = emptyList()
+                            }
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "Local Currency",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp),
+                textAlign = TextAlign.Left,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            Box(modifier = Modifier.fillMaxWidth()) {
+                StandardTextField(
+                    value = currency,
+                    onValueChange = { newValue ->
+                        currency = newValue
+                        currencySuggestions = if (newValue.isBlank()) {
+                            emptyList()
+                        } else {
+                            allCurrencies.filter {
+                                it.startsWith(newValue, ignoreCase = true)
+                            }
+                        }
+                        showCurrencyDropdown = currencySuggestions.isNotEmpty()
+                        if (currencyError) currencyError = false
+                    },
+                    label = { Text("Currency") },
+                    isError = currencyError,
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done // Changed to Done
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .onFocusChanged { focusState ->
+                            if (focusState.isFocused) {
+                                if (currency.isNotBlank() && currencySuggestions.isNotEmpty()) {
+                                    showCurrencyDropdown = true
+                                }
+                            } else {
+                                // showCurrencyDropdown = false // Consider delaying this
+                            }
+                        }
+                    )
+                DropdownMenu(
+                    expanded = showCurrencyDropdown && currencySuggestions.isNotEmpty(),
+                    onDismissRequest = { showCurrencyDropdown = false },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    currencySuggestions.take(5).forEach { suggestion ->
+                        DropdownMenuItem(
+                            text = { Text(suggestion) },
+                            onClick = {
+                                currency = suggestion
+                                showCurrencyDropdown = false
+                                currencySuggestions = emptyList()
+                            }
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+            Button(
+                onClick = { /* TODO: Implement validation and navigation */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
@@ -173,7 +290,7 @@ fun SignUpSettingsScreen(onNavigateContinue: () -> Unit) {
             ) {
                 Text(
                     "Finish",
-                    color = MaterialTheme.colorScheme.onPrimary, // Ensured contrast
+                    color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold
                 )
             }
